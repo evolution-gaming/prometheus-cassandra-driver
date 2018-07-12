@@ -12,7 +12,22 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * TODO: add scaladoc
+ * Exports Java Cassandra Driver metrics to Prometheus in an idiomatic way, with labels and all the goodies.
+ * <p/>
+ * Multiple client instances per one JVM are supported and differentiated using the {@code client} label.
+ * <p/>
+ * Example:
+ * <pre>{@code
+ *
+ * Cluster cluster = Cluster.builder().addContactPoint("192.168.0.1").build();
+ * CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector().register();
+ * collector.addClient("global", cluster);
+ *
+ * }</pre>
+ * <p/>
+ * All the exported metrics names start with {@code cassandra_driver_} prefix.
+ *
+ * @see <a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/metrics/">Java Cassandra Driver metrics description</a>
  */
 public class CassandraDriverMetricsCollector extends Collector {
   private static final List<String> BASE_LABEL_NAMES = Collections.singletonList("client");
