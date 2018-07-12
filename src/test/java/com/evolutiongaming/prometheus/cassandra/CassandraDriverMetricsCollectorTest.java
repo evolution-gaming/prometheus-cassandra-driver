@@ -6,34 +6,17 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import io.prometheus.client.Collector;
-import org.apache.thrift.transport.TTransportException;
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CassandraDriverMetricsCollectorTest {
-  private List<Cluster> clients = new ArrayList<>();
-
-  @BeforeClass
-  public static void startCassandra() throws IOException, TTransportException {
-    EmbeddedCassandraServerHelper.startEmbeddedCassandra("test-cassandra.yml");
-  }
-
-  @After
-  public void stopClients() {
-    clients.forEach(Cluster::close);
-    clients.clear();
-  }
-
   @Test
   public void shouldHandleNullMetrics() {
     Cluster clusterMock = mock(Cluster.class);
@@ -45,67 +28,11 @@ public class CassandraDriverMetricsCollectorTest {
     assertValidResultNoSamples(result);
   }
 
-  @Test
-  public void addClient() {
-    CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector();
-
-    collector.addClient("client1", connectClient());
-    List<Collector.MetricFamilySamples> result = collector.collect();
-    assertValidResultWithSamples(result, "client1");
-
-    collector.addClient("client2", connectClient());
-    result = collector.collect();
-    assertValidResultWithSamples(result, "client1", "client2");
-  }
-
-  @Test
-  public void removeClient() {
-    CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector();
-    collector.addClient("client1", connectClient());
-    collector.addClient("client2", connectClient());
-
-    collector.removeClient("client1");
-    List<Collector.MetricFamilySamples> result = collector.collect();
-    assertValidResultWithSamples(result, "client2");
-  }
-
-  @Test
-  public void clear() {
-    CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector();
-    collector.addClient("client1", connectClient());
-    collector.addClient("client2", connectClient());
-
-    collector.clear();
-    List<Collector.MetricFamilySamples> result = collector.collect();
-    assertValidResultNoSamples(result);
-  }
-
-  private Cluster connectClient() {
-    Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
-    cluster.connect();
-    clients.add(cluster);
-    return cluster;
-  }
-
   private void assertValidResultNoSamples(List<Collector.MetricFamilySamples> result) {
     assertValidResult(result);
     for (Collector.MetricFamilySamples mf : result) {
       assertEquals(0, mf.samples.size());
     }
-  }
-
-  private void assertValidResultWithSamples(
-      List<Collector.MetricFamilySamples> result, String... clientNames
-  ) {
-    assertValidResult(result);
-    List<Collector.MetricFamilySamples.Sample> samples = result.stream()
-        .flatMap(mf -> mf.samples.stream()).collect(Collectors.toList());
-    assertTrue(!samples.isEmpty());
-    samples.forEach(sample -> {
-      assertEquals("client", sample.labelNames.get(0));
-      String clientName = sample.labelValues.get(0);
-      assertTrue(Arrays.asList(clientNames).contains(clientName));
-    });
   }
 
   private void assertValidResult(List<Collector.MetricFamilySamples> result) {
