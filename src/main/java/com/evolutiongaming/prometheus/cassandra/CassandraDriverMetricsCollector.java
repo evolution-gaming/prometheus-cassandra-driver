@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentMap;
  * Example:
  * <pre>{@code
  *
- * Cluster cluster = Cluster.builder().addContactPoint("192.168.0.1").build();
+ * Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
  * CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector().register();
  * collector.addClient("global", cluster);
  *

@@ -35,9 +35,11 @@ resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
 Example:
 ```java
-Cluster cluster = Cluster.builder().addContactPoint("192.168.0.1").build();
+Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
 CassandraDriverMetricsCollector collector = new CassandraDriverMetricsCollector().register();
 collector.addClient("global", cluster);
+Session session = cluster.connect();
+session.execute("select release_version from system.local;");
 ```
 Resulting metrics:
 ```
@@ -70,10 +72,10 @@ cassandra_driver_reconnection_scheduler_queue_size{client="global",} 0.0
 cassandra_driver_task_scheduler_queue_size{client="global",} 1.0
 # HELP cassandra_driver_sent_bytes_total The number of bytes sent so far
 # TYPE cassandra_driver_sent_bytes_total counter
-cassandra_driver_sent_bytes_total{client="global",} 685.0
+cassandra_driver_sent_bytes_total{client="global",} 754.0
 # HELP cassandra_driver_received_bytes_total The number of bytes received so far
 # TYPE cassandra_driver_received_bytes_total counter
-cassandra_driver_received_bytes_total{client="global",} 57512.0
+cassandra_driver_received_bytes_total{client="global",} 57578.0
 # HELP cassandra_driver_errors_total Encountered error events
 # TYPE cassandra_driver_errors_total counter
 cassandra_driver_errors_total{client="global",error_type="connection-errors",} 0.0
@@ -100,14 +102,14 @@ cassandra_driver_errors_total{client="global",error_type="ignores-on-other-error
 cassandra_driver_errors_total{client="global",error_type="speculative-executions",} 0.0
 # HELP cassandra_driver_request_time_seconds Exposes the rate and latency for user requests
 # TYPE cassandra_driver_request_time_seconds untyped
-cassandra_driver_request_time_seconds{client="global",quantile="0",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.5",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.75",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.95",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.98",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.99",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="0.999",} 0.0
-cassandra_driver_request_time_seconds{client="global",quantile="1",} 0.0
-cassandra_driver_request_time_seconds_count{client="global",} 0.0
-cassandra_driver_request_time_seconds_mean{client="global",} 0.0
+cassandra_driver_request_time_seconds{client="global",quantile="0",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.5",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.75",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.95",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.98",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.99",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="0.999",} 0.016705277
+cassandra_driver_request_time_seconds{client="global",quantile="1",} 0.016705277
+cassandra_driver_request_time_seconds_count{client="global",} 1.0
+cassandra_driver_request_time_seconds_mean{client="global",} 0.016705277
 ```
