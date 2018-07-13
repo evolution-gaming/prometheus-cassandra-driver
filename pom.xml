@@ -8,6 +8,45 @@
     <artifactId>prometheus-cassandra-driver</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <name>Idiomatic Prometheus collector for Cassandra Java driver metrics</name>
+    <url>https://github.com/evolution-gaming/prometheus-cassandra-driver</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <url>https://github.com/evolution-gaming/prometheus-cassandra-driver/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:evolution-gaming/prometheus-cassandra-driver.git</connection>
+        <developerConnection>
+            scm:git:git@github.com:evolution-gaming/prometheus-cassandra-driver.git
+        </developerConnection>
+        <url>git@github.com:evolution-gaming/prometheus-cassandra-driver.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <organization>
+        <name>Evolution Gaming</name>
+        <url>https://www.evolutiongaming.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>migesok</id>
+            <name>Mikhail Sokolov</name>
+            <email>mikhail.g.sokolov@gmail.com</email>
+            <timezone>3</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -65,7 +104,8 @@
         <repository>
             <id>bintray-evolutiongaming-maven</id>
             <name>evolutiongaming-maven</name>
-            <url>https://api.bintray.com/maven/evolutiongaming/maven/prometheus-cassandra-driver/;publish=1
+            <url>
+                https://api.bintray.com/maven/evolutiongaming/maven/prometheus-cassandra-driver/;publish=1
             </url>
         </repository>
     </distributionManagement>
