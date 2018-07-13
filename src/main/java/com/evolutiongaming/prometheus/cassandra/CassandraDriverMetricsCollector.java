@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Exports Java Cassandra Driver metrics to Prometheus in an idiomatic way, with labels and all the goodies.
- * <p/>
+ * <p>
  * Multiple client instances per one JVM are supported and differentiated using the {@code client} label.
- * <p/>
+ * <p>
  * Example:
  * <pre>{@code
  *
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentMap;
  * collector.addClient("global", cluster);
  *
  * }</pre>
- * <p/>
+ * <p>
  * All the exported metrics names start with {@code cassandra_driver_} prefix.
  *
  * @see <a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/metrics/">Java Cassandra Driver metrics description</a>
@@ -36,7 +36,7 @@ public class CassandraDriverMetricsCollector extends Collector {
 
   /**
    * Add or replace the client instance with the given name.
-   * <p/>
+   * <p>
    * Any references any previous instance with this name is invalidated.
    *
    * @param clientName The name of the client instance, will be the metrics label value
@@ -49,7 +49,7 @@ public class CassandraDriverMetricsCollector extends Collector {
 
   /**
    * Remove the client instance with the given name.
-   * <p/>
+   * <p>
    * Any references to the instance are invalidated.
    *
    * @param clientName client instance to be removed
@@ -61,7 +61,7 @@ public class CassandraDriverMetricsCollector extends Collector {
 
   /**
    * Remove all client instances.
-   * <p/>
+   * <p>
    * Any references to all clients are invalidated.
    */
   @SuppressWarnings("WeakerAccess")
