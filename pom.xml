@@ -112,6 +112,7 @@
                     <version>2.5.3</version>
                     <configuration>
                         <releaseProfiles>releaseSignArtifacts</releaseProfiles>
+                        <arguments>-releaseSignArtifacts</arguments>
                     </configuration>
                 </plugin>
                 <plugin>
