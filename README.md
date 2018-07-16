@@ -1,7 +1,7 @@
 # prometheus-cassandra-driver
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/evolution-gaming/prometheus-cassandra-driver.svg?branch=master)](https://travis-ci.org/evolution-gaming/prometheus-cassandra-driver)
-[![version](https://api.bintray.com/packages/evolutiongaming/maven/prometheus-cassandra-driver/images/download.svg) ](https://bintray.com/evolutiongaming/maven/scala-tools/_latestVersion)
+[![version](https://api.bintray.com/packages/evolutiongaming/maven/prometheus-cassandra-driver/images/download.svg) ](https://bintray.com/evolutiongaming/maven/prometheus-cassandra-driver/_latestVersion)
 
 Idiomatic Prometheus collector for Cassandra Java driver metrics.
 
