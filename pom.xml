@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.evolutiongaming</groupId>
     <artifactId>prometheus-cassandra-driver</artifactId>
     <version>0.6-SNAPSHOT</version>
 
-    <name>Idiomatic Prometheus collector for Cassandra Java driver metrics</name>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Idiomatic Prometheus collector for Cassandra Java driver metrics</description>
     <url>https://github.com/evolution-gaming/prometheus-cassandra-driver</url>
 
     <licenses>
@@ -110,10 +112,6 @@
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.3</version>
-                    <configuration>
-                        <releaseProfiles>releaseSignArtifacts</releaseProfiles>
-                        <arguments>-PreleaseSignArtifacts</arguments>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-gpg-plugin</artifactId>
@@ -135,43 +133,27 @@
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>releaseSignArtifacts</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
     <distributionManagement>
         <repository>
             <id>bintray-evolutiongaming-maven</id>
             <name>evolutiongaming-maven</name>
             <url>
-                https://api.bintray.com/maven/evolutiongaming/maven/prometheus-cassandra-driver/;publish=1
+                https://api.bintray.com/maven/evolutiongaming/maven/prometheus-cassandra-driver/
             </url>
         </repository>
     </distributionManagement>
