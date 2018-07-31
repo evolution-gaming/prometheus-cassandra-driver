@@ -15,7 +15,7 @@ in a idiomatic Prometheus way:
 ## Usage
 
 Add Evolution Gaming Bintray Maven repository to your artifact resolution:
-* if you use Maven:
+* Maven:
 ```xml
 <repositories>
     <repository>
@@ -28,9 +28,23 @@ Add Evolution Gaming Bintray Maven repository to your artifact resolution:
     </repository>
 </repositories>
 ```
-* if you use SBT:
+* SBT:
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
+```
+
+Add the dependency:
+* Maven:
+```xml
+<dependency>
+  <groupId>com.evolutiongaming</groupId>
+  <artifactId>prometheus-cassandra-driver</artifactId>
+  <version>0.6</version>
+</dependency>
+```
+* SBT:
+```scala
+libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "0.6"
 ```
 
 Example:
