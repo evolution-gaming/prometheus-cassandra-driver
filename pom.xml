@@ -4,7 +4,7 @@
 
     <groupId>com.evolutiongaming</groupId>
     <artifactId>prometheus-cassandra-driver</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Idiomatic Prometheus collector for Cassandra Java driver metrics</description>
@@ -29,7 +29,7 @@
             scm:git:git@github.com:evolution-gaming/prometheus-cassandra-driver.git
         </developerConnection>
         <url>git@github.com:evolution-gaming/prometheus-cassandra-driver.git</url>
-        <tag>HEAD</tag>
+        <tag>v0.7</tag>
     </scm>
 
     <organization>
