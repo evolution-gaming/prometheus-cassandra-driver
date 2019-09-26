@@ -39,7 +39,7 @@ Add the dependency:
 <dependency>
   <groupId>com.evolutiongaming</groupId>
   <artifactId>prometheus-cassandra-driver</artifactId>
-  <version>0.6</version>
+  <version>0.7</version>
 </dependency>
 ```
 * SBT:
