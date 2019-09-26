@@ -45,7 +45,7 @@ public class CassandraDriverMetricsCollectorTest {
 
       assertNotNull(mf.name);
       assertTrue(mf.name.startsWith("cassandra_driver_"));
-      assertTrue(!seenMfNames.contains(mf.name));
+      assertFalse(seenMfNames.contains(mf.name));
       seenMfNames.add(mf.name);
 
       assertNotNull(mf.type);
@@ -60,7 +60,7 @@ public class CassandraDriverMetricsCollectorTest {
         assertNotNull(sample.labelValues);
         assertEquals(sample.labelNames.size(), sample.labelValues.size());
         PromSampleKey sampleKey = new PromSampleKey(sample);
-        assertTrue(!seenSampleKeys.contains(sampleKey));
+        assertFalse(seenSampleKeys.contains(sampleKey));
         seenSampleKeys.add(sampleKey);
       }
     }

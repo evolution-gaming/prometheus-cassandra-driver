@@ -54,7 +54,6 @@ public class CassandraDriverMetricsCollector extends Collector {
    *
    * @param clientName client instance to be removed
    */
-  @SuppressWarnings("WeakerAccess")
   public void removeClient(String clientName) {
     clients.remove(clientName);
   }
@@ -64,7 +63,6 @@ public class CassandraDriverMetricsCollector extends Collector {
    * <p>
    * Any references to all clients are invalidated.
    */
-  @SuppressWarnings("WeakerAccess")
   public void clear() {
     clients.clear();
   }
