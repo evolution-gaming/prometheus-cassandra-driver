@@ -102,6 +102,10 @@ public class CassandraDriverMetricsCollector extends Collector {
         "cassandra_driver_in_flight_requests",
         "The total number of in flight requests to Cassandra hosts"
     );
+    private final GaugeMetricFamily requestQueueDepth = createGauge(
+        "cassandra_driver_request_queue_depth",
+        "The total number of enqueued requests on all Cassandra hosts"
+    );
     private final GaugeMetricFamily executorQueueDepth = createGauge(
         "cassandra_driver_executor_queue_depth",
         "The number of queued up tasks in the main internal executor, or -1, if that number is unknown"
@@ -166,6 +170,7 @@ public class CassandraDriverMetricsCollector extends Collector {
           trashedConnections.addMetric(labels, metrics.getTrashedConnections().getValue());
           inFlightRequests.addMetric(labels, metrics.getInFlightRequests().getValue());
 
+          requestQueueDepth.addMetric(labels, metrics.getRequestQueueDepth().getValue());
           executorQueueDepth.addMetric(labels, metrics.getExecutorQueueDepth().getValue());
           blockingExecutorQueueDepth.addMetric(labels, metrics.getBlockingExecutorQueueDepth().getValue());
           reconnectionSchedulerQueueSize
