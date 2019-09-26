@@ -49,7 +49,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <cassandra-driver.version>3.5.1</cassandra-driver.version>
+        <cassandra-driver.version>3.7.2</cassandra-driver.version>
         <prometheus-client.version>0.7.0</prometheus-client.version>
     </properties>
 
