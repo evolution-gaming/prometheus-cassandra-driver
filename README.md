@@ -6,7 +6,7 @@
 Idiomatic Prometheus collector for Cassandra Java driver metrics.
 
 It exposes the
-[built-in metrics](https://docs.datastax.com/en/developer/java-driver/3.5/manual/metrics/)
+[built-in metrics](https://docs.datastax.com/en/developer/java-driver/3.7/manual/metrics/)
 in a idiomatic Prometheus way:
 - Prometheus naming conventions are used
 - where it is appropriate metrics are grouped under the same name with different set of labels
@@ -44,7 +44,7 @@ Add the dependency:
 ```
 * SBT:
 ```scala
-libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "0.6"
+libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "0.7"
 ```
 
 Example:
@@ -72,6 +72,9 @@ cassandra_driver_trashed_connections{client="global",} 0.0
 # HELP cassandra_driver_in_flight_requests The total number of in flight requests to Cassandra hosts
 # TYPE cassandra_driver_in_flight_requests gauge
 cassandra_driver_in_flight_requests{client="global",} 0.0
+# HELP cassandra_driver_request_queue_depth The total number of enqueued requests on all Cassandra hosts
+# TYPE cassandra_driver_request_queue_depth gauge
+cassandra_driver_request_queue_depth{client="global",} 0.0
 # HELP cassandra_driver_executor_queue_depth The number of queued up tasks in the main internal executor, or -1, if that number is unknown
 # TYPE cassandra_driver_executor_queue_depth gauge
 cassandra_driver_executor_queue_depth{client="global",} 0.0
