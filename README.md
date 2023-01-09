@@ -39,12 +39,12 @@ Add the dependency:
 <dependency>
   <groupId>com.evolutiongaming</groupId>
   <artifactId>prometheus-cassandra-driver</artifactId>
-  <version>0.7</version>
+  <version>1.0</version>
 </dependency>
 ```
 * SBT:
 ```scala
-libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "0.7"
+libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "1.0"
 ```
 
 Example:
