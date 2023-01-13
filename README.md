@@ -12,6 +12,11 @@ in a idiomatic Prometheus way:
 - where it is appropriate metrics are grouped under the same name with different set of labels
 - multiple client instances per one JVM are supported and differentiated using the `client` label
 
+## Compatibility
+* io.prometheus - simple_client 
+  * version 0.9.0 or less should be used with versions up to 0.7
+  * version 0.10.0 and more should be used starting from version 1.0
+
 ## Usage
 
 Add Evolution Gaming Bintray Maven repository to your artifact resolution:
@@ -39,12 +44,12 @@ Add the dependency:
 <dependency>
   <groupId>com.evolutiongaming</groupId>
   <artifactId>prometheus-cassandra-driver</artifactId>
-  <version>0.7</version>
+  <version>1.0</version>
 </dependency>
 ```
 * SBT:
 ```scala
-libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "0.7"
+libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "1.0"
 ```
 
 Example:

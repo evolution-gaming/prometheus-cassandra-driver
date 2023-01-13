@@ -75,7 +75,7 @@ import java.util.concurrent.TimeUnit;
     samples.addAll(meanSamples);
     return new Collector.MetricFamilySamples(
         name,
-        Collector.Type.UNTYPED,
+        Collector.Type.UNKNOWN,
         help,
         samples
     );
