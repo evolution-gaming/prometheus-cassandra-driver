@@ -1,25 +1,25 @@
 # prometheus-cassandra-driver
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/evolution-gaming/prometheus-cassandra-driver.svg?branch=master)](https://travis-ci.org/evolution-gaming/prometheus-cassandra-driver)
-[![version](https://api.bintray.com/packages/evolutiongaming/maven/prometheus-cassandra-driver/images/download.svg) ](https://bintray.com/evolutiongaming/maven/prometheus-cassandra-driver/_latestVersion)
+[![Build Status](https://github.com/evolution-gaming/prometheus-cassandra-driver/workflows/CI/badge.svg)](https://github.com/evolution-gaming/prometheus-cassandra-driver/actions?query=workflow%3ACI)
+[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=prometheus-cassandra-driver&repos=public)
 
 Idiomatic Prometheus collector for Cassandra Java driver metrics.
 
 It exposes the
 [built-in metrics](https://docs.datastax.com/en/developer/java-driver/3.7/manual/metrics/)
-in a idiomatic Prometheus way:
+in an idiomatic Prometheus way:
 - Prometheus naming conventions are used
 - where it is appropriate metrics are grouped under the same name with different set of labels
 - multiple client instances per one JVM are supported and differentiated using the `client` label
 
 ## Compatibility
-* io.prometheus - simple_client 
-  * version 0.9.0 or less should be used with versions up to 0.7
-  * version 0.10.0 and more should be used starting from version 1.0
+* Prometheus JVM Client: 
+  * versions before 0.10.0 should be used together with prometheus-cassandra-driver 0.7
+  * versions ≥ 0.10.0 supported starting with prometheus-cassandra-driver 1.0
 
 ## Usage
 
-Add Evolution Gaming Bintray Maven repository to your artifact resolution:
+Add Evolution Gaming Maven repository to your artifact resolution:
 * Maven:
 ```xml
 <repositories>
@@ -27,15 +27,15 @@ Add Evolution Gaming Bintray Maven repository to your artifact resolution:
         <snapshots>
             <enabled>false</enabled>
         </snapshots>
-        <id>bintray-evolutiongaming-maven</id>
-        <name>bintray</name>
-        <url>https://dl.bintray.com/evolutiongaming/maven</url>
+        <id>evolution-public</id>
+        <name>evolution-public</name>
+        <url>https://evolution.jfrog.io/artifactory/public</url>
     </repository>
 </repositories>
 ```
 * SBT:
 ```scala
-resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
+addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
 ```
 
 Add the dependency:
