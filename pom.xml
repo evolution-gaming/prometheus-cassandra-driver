@@ -171,11 +171,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-evolutiongaming-maven</id>
-            <name>evolutiongaming-maven</name>
-            <url>
-                https://api.bintray.com/maven/evolutiongaming/maven/prometheus-cassandra-driver/
-            </url>
+            <id>central</id>
+            <name>Evolution-releases</name>
+            <url>https://evolution.jfrog.io/artifactory/maven-local-releases</url>
         </repository>
     </distributionManagement>
 </project>
