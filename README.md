@@ -7,15 +7,15 @@ Idiomatic Prometheus collector for Cassandra Java driver metrics.
 
 It exposes the
 [built-in metrics](https://docs.datastax.com/en/developer/java-driver/3.7/manual/metrics/)
-in a idiomatic Prometheus way:
+in an idiomatic Prometheus way:
 - Prometheus naming conventions are used
 - where it is appropriate metrics are grouped under the same name with different set of labels
 - multiple client instances per one JVM are supported and differentiated using the `client` label
 
 ## Compatibility
-* io.prometheus - simple_client 
-  * version 0.9.0 or less should be used with versions up to 0.7
-  * version 0.10.0 and more should be used starting from version 1.0
+* Prometheus JVM Client: 
+  * versions before 0.10.0 should be used together with prometheus-cassandra-driver 0.7
+  * versions ≥ 0.10.0 supported starting with prometheus-cassandra-driver 1.0
 
 ## Usage
 
