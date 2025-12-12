@@ -15,15 +15,21 @@ import java.util.concurrent.TimeUnit;
   private final String name;
   private final String help;
   private final List<String> labelNames;
+  private final boolean registerMean;
 
   private final List<Sample> quantileSamples = new ArrayList<>();
   private final List<Sample> countSamples = new ArrayList<>();
   private final List<Sample> meanSamples = new ArrayList<>();
 
   TimerMetricFamilyBuilder(String name, String help, List<String> labelNames) {
+    this(name, help, labelNames, true);
+  }
+
+  TimerMetricFamilyBuilder(String name, String help, List<String> labelNames, boolean registerMean) {
     this.name = name;
     this.help = help;
     this.labelNames = labelNames;
+    this.registerMean = registerMean;
   }
 
   void addTimerMetricSample(List<String> labelValues, Timer timer) {
@@ -31,7 +37,8 @@ import java.util.concurrent.TimeUnit;
     Snapshot snapshot = timer.getSnapshot();
 
     addCountMetric(labelValues, count);
-    addMeanMetric(labelValues, nsToSec(snapshot.getMean()));
+    if (registerMean)
+      addMeanMetric(labelValues, nsToSec(snapshot.getMean()));
 
     addQuantileMetric(labelValues, "0", nsToSec(snapshot.getMin()));
     addQuantileMetric(labelValues, "0.5", nsToSec(snapshot.getMedian()));

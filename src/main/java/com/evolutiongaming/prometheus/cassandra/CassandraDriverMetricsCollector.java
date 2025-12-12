@@ -34,6 +34,8 @@ public class CassandraDriverMetricsCollector extends Collector {
 
   private final ConcurrentMap<String, Cluster> clients = new ConcurrentHashMap<>();
 
+  private boolean extractRequestTimeMeanMetric = false;
+
   /**
    * Add or replace the client instance with the given name.
    * <p>
@@ -67,6 +69,23 @@ public class CassandraDriverMetricsCollector extends Collector {
     clients.clear();
   }
 
+  /**
+   * Changes behaviour of this collector, so that request time mean is not more a
+   * part of the request time sample collection, but instead a separate metric.
+   * This need to be done in order to be compatible with the Prometheus
+   * Simpleclient Bridge for 1.0+
+   * 
+   * @see <a href=
+   *      "https://prometheus.github.io/client_java/migration/simpleclient/">Prometheus
+   *      Client Java Migration Guide</a>
+   * @param value if true, request time mean is extracted as a separate metric
+   * @return
+   */
+  public CassandraDriverMetricsCollector extractRequestTimeMeanMetric(boolean value) {
+    this.extractRequestTimeMeanMetric = value;
+    return this;
+  }
+
   @Override
   public List<MetricFamilySamples> collect() {
     return new ResultBuilder().build();
@@ -78,8 +97,13 @@ public class CassandraDriverMetricsCollector extends Collector {
     private final TimerMetricFamilyBuilder requestTimeBuilder = new TimerMetricFamilyBuilder(
         "cassandra_driver_request_time_seconds",
         "Exposes the rate and latency for user requests",
-        BASE_LABEL_NAMES
-    );
+        BASE_LABEL_NAMES,
+        !extractRequestTimeMeanMetric);
+
+    private final GaugeMetricFamily requestTimeBuilderMean = createGauge(
+        "cassandra_driver_request_time_seconds_mean",
+        "Exposes the rate and latency for user requests");
+
     private final GaugeMetricFamily knownHosts = createGauge(
         "cassandra_driver_known_hosts",
         "The number of Cassandra hosts currently known by the driver"
@@ -161,6 +185,9 @@ public class CassandraDriverMetricsCollector extends Collector {
 
         if (metrics != null) {
           requestTimeBuilder.addTimerMetricSample(labels, metrics.getRequestsTimer());
+
+          if (extractRequestTimeMeanMetric)
+            requestTimeBuilderMean.addMetric(labels, metrics.getRequestsTimer().getSnapshot().getMean());
 
           knownHosts.addMetric(labels, metrics.getKnownHosts().getValue());
           connectedToHosts.addMetric(labels, metrics.getConnectedToHosts().getValue());
