@@ -15,30 +15,24 @@ import java.util.concurrent.TimeUnit;
   private final String name;
   private final String help;
   private final List<String> labelNames;
-  private final boolean registerMean;
 
   private final List<Sample> quantileSamples = new ArrayList<>();
   private final List<Sample> countSamples = new ArrayList<>();
-  private final List<Sample> meanSamples = new ArrayList<>();
+  private final List<Sample> sumSamples = new ArrayList<>();
 
   TimerMetricFamilyBuilder(String name, String help, List<String> labelNames) {
-    this(name, help, labelNames, true);
-  }
-
-  TimerMetricFamilyBuilder(String name, String help, List<String> labelNames, boolean registerMean) {
     this.name = name;
     this.help = help;
     this.labelNames = labelNames;
-    this.registerMean = registerMean;
   }
 
   void addTimerMetricSample(List<String> labelValues, Timer timer) {
     long count = timer.getCount();
+
     Snapshot snapshot = timer.getSnapshot();
 
     addCountMetric(labelValues, count);
-    if (registerMean)
-      addMeanMetric(labelValues, nsToSec(snapshot.getMean()));
+    addSumMetric(labelValues, snapshot.getMean() * count);
 
     addQuantileMetric(labelValues, "0", nsToSec(snapshot.getMin()));
     addQuantileMetric(labelValues, "0.5", nsToSec(snapshot.getMedian()));
@@ -66,10 +60,9 @@ import java.util.concurrent.TimeUnit;
     ));
   }
 
-  private void addMeanMetric(List<String> labelValues, double value) {
-    meanSamples.add(new Collector.MetricFamilySamples.Sample(
-        name + "_mean", labelNames, labelValues, value
-    ));
+  private void addSumMetric(List<String> labelValues, double value) {
+    sumSamples.add(new Collector.MetricFamilySamples.Sample(
+        name + "_sum", labelNames, labelValues, value));
   }
 
   private double nsToSec(double nanos) {
@@ -79,12 +72,11 @@ import java.util.concurrent.TimeUnit;
   Collector.MetricFamilySamples build() {
     List<Sample> samples = new ArrayList<>(quantileSamples);
     samples.addAll(countSamples);
-    samples.addAll(meanSamples);
+    samples.addAll(sumSamples);
     return new Collector.MetricFamilySamples(
         name,
-        Collector.Type.UNKNOWN,
+        Collector.Type.SUMMARY,
         help,
-        samples
-    );
+        samples);
   }
 }
