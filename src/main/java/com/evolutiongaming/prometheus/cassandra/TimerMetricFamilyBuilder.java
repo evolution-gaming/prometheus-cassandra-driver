@@ -8,9 +8,9 @@ import io.prometheus.client.Collector.MetricFamilySamples.Sample;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
 
 /* package */class TimerMetricFamilyBuilder {
-  private static final long NS_IN_SEC = TimeUnit.SECONDS.toNanos(1);
 
   private final String name;
   private final String help;
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
     Snapshot snapshot = timer.getSnapshot();
 
     addCountMetric(labelValues, count);
-    addSumMetric(labelValues, snapshot.getMean() * count);
+    addSumMetric(labelValues, nsToSec(snapshot.getMean()) * count);
 
     addQuantileMetric(labelValues, "0", nsToSec(snapshot.getMin()));
     addQuantileMetric(labelValues, "0.5", nsToSec(snapshot.getMedian()));
@@ -50,23 +50,17 @@ import java.util.concurrent.TimeUnit;
     List<String> quantileLabelValues = new ArrayList<>(labelValues);
     quantileLabelValues.add(quantile);
     quantileSamples.add(new Collector.MetricFamilySamples.Sample(
-        name, quantileLabelNames, quantileLabelValues, value
-    ));
+        name, quantileLabelNames, quantileLabelValues, value));
   }
 
   private void addCountMetric(List<String> labelValues, double value) {
     countSamples.add(new Collector.MetricFamilySamples.Sample(
-        name + "_count", labelNames, labelValues, value
-    ));
+        name + "_count", labelNames, labelValues, value));
   }
 
   private void addSumMetric(List<String> labelValues, double value) {
     sumSamples.add(new Collector.MetricFamilySamples.Sample(
         name + "_sum", labelNames, labelValues, value));
-  }
-
-  private double nsToSec(double nanos) {
-    return nanos / NS_IN_SEC;
   }
 
   Collector.MetricFamilySamples build() {

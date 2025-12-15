@@ -11,6 +11,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
+
 /**
  * Exports Java Cassandra Driver metrics to Prometheus in an idiomatic way, with labels and all the goodies.
  * <p>
@@ -166,7 +168,7 @@ public class CassandraDriverMetricsCollector extends Collector {
         if (metrics != null) {
           requestTimeBuilder.addTimerMetricSample(labels, metrics.getRequestsTimer());
 
-          requestTimeBuilderMean.addMetric(labels, metrics.getRequestsTimer().getSnapshot().getMean());
+          requestTimeBuilderMean.addMetric(labels, nsToSec(metrics.getRequestsTimer().getSnapshot().getMean()));
 
           knownHosts.addMetric(labels, metrics.getKnownHosts().getValue());
           connectedToHosts.addMetric(labels, metrics.getConnectedToHosts().getValue());
