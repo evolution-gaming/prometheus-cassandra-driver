@@ -80,7 +80,8 @@ public class CassandraDriverMetricsCollector extends Collector {
     private final TimerMetricFamilyBuilder requestTimeBuilder = new TimerMetricFamilyBuilder(
         "cassandra_driver_request_time_seconds",
         "Exposes the rate and latency for user requests",
-        BASE_LABEL_NAMES);
+        BASE_LABEL_NAMES
+    );
 
     private final GaugeMetricFamily requestTimeBuilderMean = createGauge(
         "cassandra_driver_request_time_seconds_mean",

@@ -19,6 +19,8 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
   private final List<Sample> countSamples = new ArrayList<>();
   private final List<Sample> sumSamples = new ArrayList<>();
 
+  private static String UNIT_SECONDS = "seconds";
+
   TimerMetricFamilyBuilder(String name, String help, List<String> labelNames) {
     this.name = name;
     this.help = help;
@@ -49,12 +51,14 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
     List<String> quantileLabelValues = new ArrayList<>(labelValues);
     quantileLabelValues.add(quantile);
     quantileSamples.add(new Collector.MetricFamilySamples.Sample(
-        name, quantileLabelNames, quantileLabelValues, value));
+        name, quantileLabelNames, quantileLabelValues, value
+    ));
   }
 
   private void addCountMetric(List<String> labelValues, double value) {
     countSamples.add(new Collector.MetricFamilySamples.Sample(
-        name + "_count", labelNames, labelValues, value));
+        name + "_count", labelNames, labelValues, value
+    ));
   }
 
   private void addSumMetric(List<String> labelValues, double value) {
@@ -68,8 +72,10 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
     samples.addAll(sumSamples);
     return new Collector.MetricFamilySamples(
         name,
+        UNIT_SECONDS,
         Collector.Type.SUMMARY,
         help,
-        samples);
+        samples
+    );
   }
 }
