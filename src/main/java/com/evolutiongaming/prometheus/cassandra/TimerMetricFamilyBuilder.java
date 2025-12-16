@@ -2,14 +2,18 @@ package com.evolutiongaming.prometheus.cassandra;
 
 import com.codahale.metrics.Snapshot;
 import com.codahale.metrics.Timer;
+
 import io.prometheus.client.Collector;
+import io.prometheus.client.Collector.MetricFamilySamples;
 import io.prometheus.client.Collector.MetricFamilySamples.Sample;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
 
 /* package */class TimerMetricFamilyBuilder {
+  private static final String UNIT_SECONDS = "seconds";
 
   private final String name;
   private final String help;
@@ -18,8 +22,8 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
   private final List<Sample> quantileSamples = new ArrayList<>();
   private final List<Sample> countSamples = new ArrayList<>();
   private final List<Sample> sumSamples = new ArrayList<>();
+  private final List<Sample> meanSamples = new ArrayList<>();
 
-  private static String UNIT_SECONDS = "seconds";
 
   TimerMetricFamilyBuilder(String name, String help, List<String> labelNames) {
     this.name = name;
@@ -34,6 +38,7 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
 
     addCountMetric(labelValues, count);
     addSumMetric(labelValues, nsToSec(snapshot.getMean()) * count);
+    addMeanMetric(labelValues, nsToSec(snapshot.getMean()));
 
     addQuantileMetric(labelValues, "0", nsToSec(snapshot.getMin()));
     addQuantileMetric(labelValues, "0.5", nsToSec(snapshot.getMedian()));
@@ -67,16 +72,28 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
     ));
   }
 
-  Collector.MetricFamilySamples build() {
+  private void addMeanMetric(List<String> labelValues, double value) {
+    meanSamples.add(new Collector.MetricFamilySamples.Sample(
+        name + "_mean", labelNames, labelValues, value
+    ));
+  }
+
+  List<Collector.MetricFamilySamples> build() {
     List<Sample> samples = new ArrayList<>(quantileSamples);
     samples.addAll(countSamples);
     samples.addAll(sumSamples);
-    return new Collector.MetricFamilySamples(
+
+    MetricFamilySamples summary = new Collector.MetricFamilySamples(
         name,
         UNIT_SECONDS,
         Collector.Type.SUMMARY,
         help,
         samples
     );
+
+    MetricFamilySamples mean = new Collector.MetricFamilySamples(
+            name + "_mean", Collector.Type.GAUGE, help, meanSamples);
+    
+    return Arrays.asList(summary, mean);
   }
 }

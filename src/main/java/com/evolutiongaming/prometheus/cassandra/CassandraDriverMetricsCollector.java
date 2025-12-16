@@ -11,8 +11,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
-
 /**
  * Exports Java Cassandra Driver metrics to Prometheus in an idiomatic way, with labels and all the goodies.
  * <p>
@@ -82,10 +80,6 @@ public class CassandraDriverMetricsCollector extends Collector {
         "Exposes the rate and latency for user requests",
         BASE_LABEL_NAMES
     );
-
-    private final GaugeMetricFamily requestTimeBuilderMean = createGauge(
-        "cassandra_driver_request_time_seconds_mean",
-        "Exposes the rate and latency for user requests");
 
     private final GaugeMetricFamily knownHosts = createGauge(
         "cassandra_driver_known_hosts",
@@ -169,8 +163,6 @@ public class CassandraDriverMetricsCollector extends Collector {
         if (metrics != null) {
           requestTimeBuilder.addTimerMetricSample(labels, metrics.getRequestsTimer());
 
-          requestTimeBuilderMean.addMetric(labels, nsToSec(metrics.getRequestsTimer().getSnapshot().getMean()));
-
           knownHosts.addMetric(labels, metrics.getKnownHosts().getValue());
           connectedToHosts.addMetric(labels, metrics.getConnectedToHosts().getValue());
           openConnections.addMetric(labels, metrics.getOpenConnections().getValue());
@@ -190,7 +182,7 @@ public class CassandraDriverMetricsCollector extends Collector {
           addErrorsMetrics(clientName, metrics.getErrorMetrics());
         }
       }
-      mfs.add(requestTimeBuilder.build());
+      mfs.addAll(requestTimeBuilder.build());
       return mfs;
     }
 
