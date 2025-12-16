@@ -79,16 +79,16 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
   }
 
   List<Collector.MetricFamilySamples> build() {
-    List<Sample> samples = new ArrayList<>(quantileSamples);
-    samples.addAll(countSamples);
-    samples.addAll(sumSamples);
+    List<Sample> summarySamples = new ArrayList<>(quantileSamples);
+    summarySamples.addAll(countSamples);
+    summarySamples.addAll(sumSamples);
 
     MetricFamilySamples summary = new Collector.MetricFamilySamples(
         name,
         UNIT_SECONDS,
         Collector.Type.SUMMARY,
         help,
-        samples
+        summarySamples
     );
 
     MetricFamilySamples mean = new Collector.MetricFamilySamples(
