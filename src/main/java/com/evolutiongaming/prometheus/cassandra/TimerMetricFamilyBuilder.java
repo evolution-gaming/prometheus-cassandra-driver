@@ -63,7 +63,8 @@ import static com.evolutiongaming.prometheus.cassandra.Conversions.nsToSec;
 
   private void addSumMetric(List<String> labelValues, double value) {
     sumSamples.add(new Collector.MetricFamilySamples.Sample(
-        name + "_sum", labelNames, labelValues, value));
+        name + "_sum", labelNames, labelValues, value
+    ));
   }
 
   Collector.MetricFamilySamples build() {
