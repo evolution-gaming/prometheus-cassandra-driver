@@ -35,14 +35,16 @@ jobs:
 
       - name: Decode PGP secrets
         run: |
+          PGP_KEY=$(echo "${{ secrets.PGP_SECRET }}" | base64 -d)
+          PGP_PASS=$(echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d)
           {
             echo "PGP_KEY_DECODED<<EOF"
-            echo "${{ secrets.PGP_SECRET }}" | base64 -d
+            echo "$PGP_KEY"
             echo "EOF"
           } >> $GITHUB_ENV
           {
             echo "PGP_PASS_DECODED<<EOF"
-            echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d
+            echo "$PGP_PASS"
             echo "EOF"
           } >> $GITHUB_ENV
 
