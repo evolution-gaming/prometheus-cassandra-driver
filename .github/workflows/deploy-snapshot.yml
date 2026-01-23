@@ -33,6 +33,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Decode PGP secrets
+        run: |
+          echo "PGP_KEY_DECODED<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.PGP_SECRET }}" | base64 -d >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "PGP_PASS_DECODED<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - uses: actions/setup-java@v4
         with:
           java-version: '8'
@@ -41,7 +50,7 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-          gpg-private-key: ${{ secrets.PGP_SECRET }}
+          gpg-private-key: ${{ env.PGP_KEY_DECODED }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Set SNAPSHOT version
@@ -52,4 +61,4 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          MAVEN_GPG_PASSPHRASE: ${{ env.PGP_PASS_DECODED }}
