@@ -31,18 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Decode PGP secrets
+      - name: Decode PGP key
         run: |
           PGP_KEY=$(echo "${{ secrets.PGP_SECRET }}" | base64 -d)
-          PGP_PASS=$(echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d)
           {
             echo "PGP_KEY_DECODED<<EOF"
             echo "$PGP_KEY"
-            echo "EOF"
-          } >> $GITHUB_ENV
-          {
-            echo "PGP_PASS_DECODED<<EOF"
-            echo "$PGP_PASS"
             echo "EOF"
           } >> $GITHUB_ENV
 
@@ -68,7 +62,7 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ env.PGP_PASS_DECODED }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
 
       - name: Set next SNAPSHOT version
         if: ${{ !github.event.release.prerelease }}
