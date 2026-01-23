@@ -33,12 +33,16 @@ jobs:
 
       - name: Decode PGP secrets
         run: |
-          echo "PGP_KEY_DECODED<<EOF" >> $GITHUB_ENV
-          echo "${{ secrets.PGP_SECRET }}" | base64 -d >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          echo "PGP_PASS_DECODED<<EOF" >> $GITHUB_ENV
-          echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "PGP_KEY_DECODED<<EOF"
+            echo "${{ secrets.PGP_SECRET }}" | base64 -d
+            echo "EOF"
+          } >> $GITHUB_ENV
+          {
+            echo "PGP_PASS_DECODED<<EOF"
+            echo "${{ secrets.PGP_PASSPHRASE }}" | base64 -d
+            echo "EOF"
+          } >> $GITHUB_ENV
 
       - uses: actions/setup-java@v4
         with:
