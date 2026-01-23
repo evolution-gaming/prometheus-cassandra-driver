@@ -1,6 +1,9 @@
 name: CI
 
-on: [push, pull_request]
+on: 
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -24,7 +27,8 @@ jobs:
 
       - name: slack
         uses: lazy-actions/slatify@master
-        if: failure() && github.ref == 'refs/heads/master'
+        # Disable Slack notifications until we figure out how to fix them
+        if: false 
         with:
           type: ${{ job.status }}
           job_name: Build

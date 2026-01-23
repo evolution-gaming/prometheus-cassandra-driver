@@ -142,3 +142,10 @@ hs_err_pid*
 .idea/
 
 *.iml
+
+# VS Code Stuff
+.vscode/
+
+# Metals stuff (Just for the case)
+.metals/
+.bloop/
