@@ -1,0 +1,22 @@
+name: Check PGP Key
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-key:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check first 7 characters of PGP_SECRET
+        run: |
+          KEY="${{ secrets.PGP_SECRET }}"
+          FIRST_7="${KEY:0:7}"
+          echo "First 7 characters: $FIRST_7"
+
+      - name: Check first 7 characters after base64 decode
+        run: |
+          KEY="${{ secrets.PGP_SECRET }}"
+          DECODED=$(echo "$KEY" | base64 -d 2>/dev/null || echo "Failed to decode")
+          FIRST_7="${DECODED:0:7}"
+          echo "First 7 characters after decode: $FIRST_7"
