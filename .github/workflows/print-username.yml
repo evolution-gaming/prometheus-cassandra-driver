@@ -8,7 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Print Sonatype Username
+      - name: Print Sonatype Username 0-5
         run: |
           USERNAME="${{ secrets.SONATYPE_USERNAME }}"
-          echo "SONATYPE_USERNAME=${USERNAME:0:12}"
+          echo "SONATYPE_USERNAME=${USERNAME:0:5}"
+
+      - name: Print Sonatype Username 5-10
+        run: |
+          USERNAME="${{ secrets.SONATYPE_USERNAME }}"
+          echo "SONATYPE_USERNAME=${USERNAME:5:10}"
