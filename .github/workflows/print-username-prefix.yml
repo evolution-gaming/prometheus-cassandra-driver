@@ -1,0 +1,14 @@
+name: Print Username Prefix
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-prefix:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Print first 5 characters of SONATYPE_USERNAME
+        run: echo "${SONATYPE_USERNAME:0:5}"
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
