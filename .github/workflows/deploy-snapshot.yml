@@ -56,9 +56,6 @@ jobs:
       - name: Set SNAPSHOT version
         run: mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT//')-$(date +%Y%m%d)-$(git rev-parse --short HEAD)-SNAPSHOT
 
-      - name: Print Sonatype Username
-        run: echo "SONATYPE_USERNAME=${{ secrets.SONATYPE_USERNAME }}"
-
       - name: Publish SNAPSHOT to Maven Central
         run: mvn -B deploy -DskipTests
         env:

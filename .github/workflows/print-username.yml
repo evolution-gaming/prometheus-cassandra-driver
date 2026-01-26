@@ -1,0 +1,12 @@
+name: Print Secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-secrets:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Print Sonatype Username
+        run: echo "SONATYPE_USERNAME=${{ secrets.SONATYPE_USERNAME }}"
