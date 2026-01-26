@@ -9,4 +9,6 @@ jobs:
     
     steps:
       - name: Print Sonatype Username
-        run: echo "SONATYPE_USERNAME=${{ secrets.SONATYPE_USERNAME }}"
+        run: |
+          USERNAME="${{ secrets.SONATYPE_USERNAME }}"
+          echo "SONATYPE_USERNAME=${USERNAME:0:12}"
