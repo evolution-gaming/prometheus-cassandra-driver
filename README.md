@@ -19,24 +19,7 @@ in an idiomatic Prometheus way:
 
 ## Usage
 
-Add Evolution Gaming Maven repository to your artifact resolution:
-* Maven:
-```xml
-<repositories>
-    <repository>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-        <id>evolution-public</id>
-        <name>evolution-public</name>
-        <url>https://evolution.jfrog.io/artifactory/public</url>
-    </repository>
-</repositories>
-```
-* SBT:
-```scala
-addSbtPlugin("com.evolution" % "sbt-artifactory-plugin" % "0.0.2")
-```
+<font color="red"> NOTE the dependency organization change from `com.evolutiongaming` to `com.evolution`</font>
 
 Add the dependency:
 * Maven:
@@ -44,9 +27,10 @@ Add the dependency:
 <dependency>
   <groupId>com.evolution</groupId>
   <artifactId>prometheus-cassandra-driver</artifactId>
-  <version>1.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
+
 * SBT:
 ```scala
 libraryDependencies += "com.evolution" % "prometheus-cassandra-driver" % "1.1.0"
