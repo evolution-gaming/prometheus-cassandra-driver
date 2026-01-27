@@ -1,7 +1,7 @@
 # prometheus-cassandra-driver
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/evolution-gaming/prometheus-cassandra-driver/workflows/CI/badge.svg)](https://github.com/evolution-gaming/prometheus-cassandra-driver/actions?query=workflow%3ACI)
-[![Version](https://img.shields.io/badge/version-click-blue)](https://evolution.jfrog.io/artifactory/api/search/latestVersion?g=com.evolutiongaming&a=prometheus-cassandra-driver&repos=public)
+[![Maven Central](https://img.shields.io/maven-central/v/com.evolution/prometheus-cassandra-driver)](https://central.sonatype.com/artifact/com.evolution/prometheus-cassandra-driver)
 
 Idiomatic Prometheus collector for Cassandra Java driver metrics.
 
@@ -42,14 +42,14 @@ Add the dependency:
 * Maven:
 ```xml
 <dependency>
-  <groupId>com.evolutiongaming</groupId>
+  <groupId>com.evolution</groupId>
   <artifactId>prometheus-cassandra-driver</artifactId>
   <version>1.0</version>
 </dependency>
 ```
 * SBT:
 ```scala
-libraryDependencies += "com.evolutiongaming" % "prometheus-cassandra-driver" % "1.0"
+libraryDependencies += "com.evolution" % "prometheus-cassandra-driver" % "1.1.0"
 ```
 
 Example:
